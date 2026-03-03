@@ -1,0 +1,56 @@
+.img-card {
+  box-sizing: border-box;
+
+  .avatar-card {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+
+    .avatar {
+      flex-shrink: 0;
+
+      .avatar-link {
+        display: block;
+
+        .logo-wrapper {
+          width: 96px;
+          height: 96px;
+          border-radius: 50%;
+          overflow: hidden;
+          border: 3px solid #6C63FF;
+          box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.2), 0 4px 20px rgba(0,0,0,0.4);
+          transition: box-shadow 250ms ease;
+
+          &:hover {
+            box-shadow: 0 0 0 5px rgba(108, 99, 255, 0.35), 0 4px 24px rgba(0,0,0,0.5);
+          }
+
+          img {
+            width: 96px;
+            height: 96px;
+            object-fit: cover;
+          }
+        }
+      }
+    }
+
+    .title {
+      .grid {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 13px;
+        color: #9d98ff;
+        font-weight: 500;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+
+        span {
+          font-size: 11px;
+          color: #6b7280;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}

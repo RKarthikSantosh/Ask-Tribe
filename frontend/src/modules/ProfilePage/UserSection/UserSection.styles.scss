@@ -1,0 +1,8 @@
+/* UserSection: avatar + info side-by-side */
+.grid {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+  color: #e2e4e8;
+}

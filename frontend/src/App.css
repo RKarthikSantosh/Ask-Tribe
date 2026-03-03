@@ -1,0 +1,30 @@
+:root {
+    --brand-primary: #6C63FF;
+    --brand-accent: #00C9A7;
+    --brand-primary-dark: #5a52e0;
+    --brand-primary-light: #8b85ff;
+    --bg-dark: #1e1e2e;
+    --bg-surface: #2d2d3e;
+    --bg-surface-2: #232334;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", "Liberation Sans", sans-serif !important;
+    transition: all 300ms ease-in-out;
+}
+
+body {
+    background-color: #2d2d2d !important;
+    padding-top: 0 !important;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+button {
+    margin: 3px;
+}

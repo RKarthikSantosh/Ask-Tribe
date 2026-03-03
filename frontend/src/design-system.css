@@ -1,0 +1,273 @@
+/* Colour Utilities */
+.fc-black-500, .fc-black-600, .fc-black-800 { color: #c4c8cc !important; }
+.fc-light  { color: #9199a1 !important; }
+.fc-error  { color: #f85149 !important; }
+.fc-white  { color: #fff !important; }
+
+/* Font-weight Utilities */
+.fw-normal { font-weight: 400 !important; }
+.fw-bold   { font-weight: 700 !important; }
+
+/* Font-size Utilities */
+.fs-caption { font-size: 12px !important; }
+.fs-body1   { font-size: 13px !important; }
+.fs-body2   { font-size: 15px !important; }
+.fs-title   { font-size: 19px !important; }
+
+/* Spacing Utilities */
+.p16  { padding: 16px !important; }
+.ml8  { margin-left: 8px !important; }
+.mt4  { margin-top: 4px !important; }
+.mt32 { margin-top: 32px !important; }
+
+/* Grid / Layout */
+.grid       { display: grid !important; }
+.gs4        { gap: 4px !important; }
+.gsy        { row-gap: 4px !important; }
+.fd-column  { grid-auto-flow: column !important; }
+.fl-grow1   { flex-grow: 1 !important; }
+.grid--cell { display: grid !important; }
+.ps-relative { position: relative !important; }
+.js-auth-item { display: flex; flex-direction: column; }
+.h100 { height: 100% !important; }
+
+/* Base Button (s-btn) */
+.s-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 200ms ease, border-color 200ms ease, color 200ms ease, transform 100ms ease, box-shadow 200ms ease;
+  white-space: nowrap;
+  text-decoration: none !important;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+
+.s-btn:hover { transform: translateY(-1px); }
+.s-btn:active { transform: translateY(0); }
+
+/* Primary button — AskTribe indigo fill */
+.s-btn__primary {
+  background: #6C63FF;
+  color: #fff !important;
+  border-color: #6C63FF;
+  box-shadow: 0 2px 8px rgba(108, 99, 255, 0.35);
+}
+.s-btn__primary:hover {
+  background: #5a52e0;
+  border-color: #5a52e0;
+  box-shadow: 0 4px 16px rgba(108, 99, 255, 0.45);
+}
+
+/* Filled / secondary button */
+.s-btn__filled {
+  background: #2d2d3e;
+  color: #c4c8cc !important;
+  border-color: #444455;
+}
+.s-btn__filled:hover {
+  background: #373750;
+  border-color: #6C63FF;
+  color: #fff !important;
+}
+
+/* Ghost / muted button (selected state) */
+.s-btn.is-selected {
+  background: rgba(108, 99, 255, 0.18);
+  color: #8b85ff !important;
+  border-color: #6C63FF;
+}
+
+/* Danger */
+.s-btn__danger {
+  background: #f85149;
+  color: #fff !important;
+  border-color: #f85149;
+}
+.s-btn__danger:hover {
+  background: #e03b35;
+  border-color: #e03b35;
+}
+
+/* Input Fields (s-input) */
+.s-input,
+.s-input__search,
+input.s-input {
+  display: block;
+  width: 100%;
+  padding: 4px 9px;
+  font-size: 13px;
+  color: #e2e4e8 !important;
+  background: #1a1a2a !important;
+  border: 1px solid #3a3a4e;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+  box-sizing: border-box;
+  height: 28px;
+}
+.s-input:focus,
+.s-input__search:focus,
+input.s-input:focus {
+  border-color: #6C63FF;
+  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+  background: #1e1e30 !important;
+}
+.s-input::placeholder { color: #6b7280 !important; }
+
+/* Textarea variant */
+.s-textarea {
+  display: block;
+  width: 100%;
+  padding: 9px 12px;
+  font-size: 13px;
+  color: #e2e4e8;
+  background: #1a1a2a;
+  border: 1px solid #3a3a4e;
+  border-radius: 6px;
+  outline: none;
+  resize: vertical;
+  min-height: 120px;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+  box-sizing: border-box;
+}
+.s-textarea:focus {
+  border-color: #6C63FF;
+  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+}
+
+/* Labels (s-label) */
+.s-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #c4c8cc !important;
+  margin-bottom: 4px;
+}
+
+/* Cards (s-card) */
+.s-card {
+  background: #252535;
+  border: 1px solid #2f2f45;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+/* Button Group (sort tabs) */
+.s-btn-group {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap;
+  gap: 0;
+  border: 1px solid #3a3a4e;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.s-btn-group .s-btn {
+  border-radius: 0;
+  border: none;
+  border-right: 1px solid #3a3a4e;
+  padding: 5px 12px;
+  font-size: 12px;
+  background: #1e1e2e;
+  color: #9199a1 !important;
+}
+.s-btn-group .s-btn:last-child {
+  border-right: none;
+}
+.s-btn-group .s-btn:hover {
+  background: #2a2a3e;
+  color: #c4c8cc !important;
+  transform: none;
+}
+.s-btn-group .s-btn.is-selected {
+  background: #6C63FF;
+  color: #fff !important;
+  border-color: transparent;
+}
+
+.s-navigation {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+}
+.s-navigation--item {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #9199a1 !important;
+  text-decoration: none !important;
+  transition: background 150ms ease, color 150ms ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.s-navigation--item:hover {
+  background: rgba(108, 99, 255, 0.12);
+  color: #c4c8cc !important;
+}
+.s-navigation--item.is-selected {
+  background: rgba(108, 99, 255, 0.18);
+  color: #8b85ff !important;
+}
+.s-navigation--item.not-selected {
+  color: #9199a1 !important;
+}
+
+/* Misc Stacks utilities */
+.bs-md { box-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+
+/* Link styles */
+a,
+a:visited {
+  color: #9d98ff;
+  text-decoration: none;
+}
+a:hover {
+  color: #c0bdff;
+  text-decoration: underline;
+}
+
+.-link {
+  color: #9d98ff;
+  text-decoration: none;
+}
+.-link:hover {
+  color: #c0bdff;
+  text-decoration: underline;
+}
+
+/* license / caption text in auth form */
+.license, .fs-caption { color: #6b7280 !important; font-size: 12px !important; }
+
+/* Upvote / vote buttons */
+.vote-btn {
+  background: transparent;
+  border: none;
+  color: #9199a1;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+}
+.vote-btn:hover { background: rgba(108,99,255,0.15); color: #8b85ff; }
+.vote-btn.upvoted { color: #6C63FF; }
+.vote-btn.downvoted { color: #f85149; }
+
+/* Markdown editor toolbar wrapper */
+.rich-text-editor-container {
+  border: 1px solid #3a3a4e !important;
+  border-radius: 6px !important;
+  background: #1a1a2a !important;
+  padding: 0 !important;
+  overflow: hidden;
+}

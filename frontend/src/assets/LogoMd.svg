@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="37" viewBox="0 0 160 37" fill="none">
+  <!-- Chat bubble glyph -->
+  <rect x="1" y="2" width="28" height="22" rx="5" fill="#6C63FF"/>
+  <polygon points="6,24 14,30 14,24" fill="#6C63FF"/>
+  <text x="7" y="18" font-family="Arial,sans-serif" font-weight="800" font-size="13" fill="white">A</text>
+  <!-- Wordmark -->
+  <text x="36" y="26" font-family="Arial,sans-serif" font-weight="700" font-size="20" fill="#e7e8eb">Ask</text>
+  <text x="74" y="26" font-family="Arial,sans-serif" font-weight="700" font-size="20" fill="#6C63FF">Tribe</text>
+</svg>

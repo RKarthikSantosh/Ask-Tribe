@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="37" viewBox="0 0 32 37" fill="none">
+  <!-- Chat bubble -->
+  <rect x="1" y="2" width="30" height="24" rx="6" fill="#6C63FF"/>
+  <polygon points="5,26 16,34 16,26" fill="#6C63FF"/>
+  <!-- "A" letter -->
+  <text x="8" y="21" font-family="Arial,sans-serif" font-weight="800" font-size="17" fill="white">A</text>
+</svg>

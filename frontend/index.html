@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <link rel='icon' href='/LogoGlyphMd.svg' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <meta name='theme-color' content='#6C63FF' />
+    <meta
+      name='description'
+      content='AskTribe - A community-powered Q&amp;A platform where developers learn, share, and grow together.'
+    />
+
+    <title>AskTribe - Where Developers Learn, Share, &amp; Build Careers</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+  </head>
+  <body class='theme-dark'>
+    <script type="module" src="/src/main.jsx"></script>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id='root'></div>
+
+    <script src='https://code.jquery.com/jquery-3.2.1.slim.min.js' integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN' crossorigin='anonymous'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q' crossorigin='anonymous'></script>
+    <script>
+      let pageX = $(document).width();
+      let pageY = $(document).height();
+      let mouseY=0;
+      let mouseX=0;
+
+      $(document).mousemove(function( event ) {
+        mouseY = event.pageY;
+        const yAxis = (pageY / 2 - mouseY) / pageY * 300;
+        mouseX = event.pageX / -pageX;
+        const xAxis = -mouseX * 100 - 100;
+
+        $('.box__ghost-eyes')
+                .css({ 'transform': 'translate('+ xAxis +'%,-'+ yAxis +'%)' });
+      });
+    </script>
+  </body>
+</html>
