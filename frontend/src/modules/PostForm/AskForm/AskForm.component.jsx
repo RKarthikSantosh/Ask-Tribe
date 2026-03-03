@@ -1,4 +1,5 @@
-import React, { Fragment, useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import {useHistory} from 'react-router-dom';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addPost } from "../../../redux/posts/posts.actions";
@@ -26,6 +27,7 @@ const AskForm = ({ addPost }) => {
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  const history = useHistory();
 
   const validateFormData = () => {
     const errors = [];
@@ -73,7 +75,7 @@ const AskForm = ({ addPost }) => {
       body: "",
       tagname: "",
     });
-    markdownEditorRef.current.cleanEditorState();
+    history.push("/");
   };
 
   const updateConvertedContent = (htmlConvertedContent) => {

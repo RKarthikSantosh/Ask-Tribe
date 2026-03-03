@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
@@ -6,7 +6,6 @@ import {login} from '../../../redux/auth/auth.actions';
 import {register} from '../../../redux/auth/auth.actions';
 
 import Logo from '../../../assets/LogoGlyphMd.svg';
-import ExternalLink from '../../../assets/ExternalLink.svg';
 
 import './AuthForm.styles.scss';
 

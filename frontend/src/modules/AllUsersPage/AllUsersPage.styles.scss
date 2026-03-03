@@ -1,7 +1,6 @@
 .users-page {
-  width: calc(100% - 300px - 24px);
+  flex: 1;
   padding: 24px 0 24px 0;
-  float: left;
   margin: 0;
 
   .headline {

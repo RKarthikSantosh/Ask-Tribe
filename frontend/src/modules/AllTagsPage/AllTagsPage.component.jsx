@@ -1,4 +1,4 @@
-import React, {useEffect, Fragment, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {getTags} from '../../redux/tags/tags.actions';

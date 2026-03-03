@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import { useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -21,7 +21,7 @@ const HomePage = ({getPosts, post: {posts, loading}}) => {
   }, [getPosts]);
 
   const [page, setPage] = useState(1);
-  const [sortType, setSortType] = useState('Month')
+  const [sortType, setSortType] = useState('Newest')
 
   const handlePaginationChange = (e, value) => setPage(value);
   
@@ -46,7 +46,7 @@ const HomePage = ({getPosts, post: {posts, loading}}) => {
           </span>
           <div className="btns-filter">
             <ButtonGroup
-              buttons={['Today', 'Week', 'Month', 'Year']}
+              buttons={['Newest', 'Today', 'Week', 'Month', 'Year']}
               selected={sortType}
               setSelected={setSortType}
             />

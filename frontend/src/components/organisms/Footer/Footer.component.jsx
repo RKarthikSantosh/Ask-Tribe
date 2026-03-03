@@ -16,7 +16,7 @@ const Footer = () => {
           >
             <GitHub/>
           </a>
-          <p><strong>GitHub</strong></p>
+          <p style={{color: "white"}}><strong>GitHub</strong></p>
         </div>
       </div>
     </div>

@@ -42,6 +42,8 @@ const handleFilter = (sortType, page = '') => {
 
 
     switch (temp) {
+        case 'Newest':
+            return (a) => true
         case 'Today':
             return(a) => handleToday(a)
         case 'Week':
