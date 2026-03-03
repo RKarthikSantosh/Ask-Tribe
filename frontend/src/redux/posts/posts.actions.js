@@ -98,10 +98,13 @@ export const addPost = (formData) => async (dispatch) => {
   try {
     const res = await createSinglePost(formData);
 
-    dispatch({
-      type: ADD_POST,
-      payload: res.data.data,
-    });
+    const postData = res.data.data;
+    if (typeof postData === 'object' && postData !== null && !Array.isArray(postData)) {
+      dispatch({
+        type: ADD_POST,
+        payload: postData,
+      });
+    }
 
     dispatch(setAlert(res.data.message, "success"));
 

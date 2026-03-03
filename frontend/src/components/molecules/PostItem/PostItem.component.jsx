@@ -13,8 +13,12 @@ import TagBadge from "../TagBadge/TagBadge.component";
 
 import "./PostItem.styles.scss";
 
-const PostItem = ({
-  post: {
+const PostItem = ({post}) => {
+  if (typeof post !== 'object' || post === null || Array.isArray(post)) {
+    return null;
+  }
+
+  const {
     id,
     title,
     body,
@@ -25,9 +29,9 @@ const PostItem = ({
     comment_count,
     views,
     created_at,
-    tags,
-  },
-}) => {
+    tags = [],
+  } = post;
+
   const answerVoteUp = (
     <div className="vote answer">
       <span className="vote-count">{answer_count}</span>
