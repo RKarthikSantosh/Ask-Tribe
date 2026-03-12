@@ -57,15 +57,15 @@ const HomePage = ({getPosts, post: {posts, loading}}) => {
           </div>
         </div>
         <div className='questions-tabs'>
-          <span>
-            {new Intl.NumberFormat('en-IN').format(filteredPosts.length)} questions
-          </span>
-          <div className="btns-filter">
-            <SearchBox
-              placeholder={'Search questions...'}
-              handleChange={handleSearchChange}
-              width={'220px'}
-            />
+          <SearchBox
+            placeholder={'Search questions...'}
+            handleChange={handleSearchChange}
+            width={'220px'}
+          />
+          <div className="right-side-tools">
+            <span className="item-count">
+              {new Intl.NumberFormat('en-IN').format(filteredPosts.length)} questions
+            </span>
             <ButtonGroup
               buttons={['Newest', 'Today', 'Week', 'Month', 'Year']}
               selected={sortType}

@@ -36,26 +36,23 @@ const AllTagsPage = ({getTags, tag: {tags, loading}}) => {
   ) : (
     <>
       <div id='mainbar' className='tags-page fc-black-800'>
-        <h1 className='headline'>Tags</h1>
-        <p className='fs-body'>
-          A tag is a keyword or label that categorizes your question with other,
-          similar questions. Using the right tags makes it easier for others to
-          find and answer your question.
-        </p>
-        <div className='headline-count'>
-          <span>{new Intl.NumberFormat('en-IN').format(tags.length)} tags</span>
-        </div>
-        <div className='tags-box pl16 pr16 pb16'>
+        <h1 className="headline">Tags</h1>
+        <div className="tags-tabs">
           <SearchBox
-            placeholder={'filter by tag name'}
+            placeholder={"filter by tag name"}
             handleChange={handleChange}
-            width={'200px'}
+            width={"200px"}
           />
-          <ButtonGroup
-            buttons={['Popular', 'Name', 'New']}
-            selected={sortType}
-            setSelected={setSortType}
-          />
+          <div className="right-side-tools">
+            <span className="item-count">
+              {new Intl.NumberFormat("en-IN").format(tags.length)} tags
+            </span>
+            <ButtonGroup
+              buttons={["Popular", "Name", "New"]}
+              selected={sortType}
+              setSelected={setSortType}
+            />
+          </div>
         </div>
         <div className='user-browser'>
           <div className='grid-layout'>

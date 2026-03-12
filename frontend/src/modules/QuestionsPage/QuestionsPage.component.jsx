@@ -23,8 +23,20 @@ const QuestionsPage = ({getPosts, post: {posts, loading}}) => {
 
   const [page, setPage] = useState(1);
   const [sortType, setSortType] = useState('Newest');
+  const [searchQueryState, setSearchQueryState] = useState('');
 
-  let searchQuery = new URLSearchParams(useLocation().search).get('search');
+  const handleSearchChange = (e) => {
+    setSearchQueryState(e.target.value);
+    setPage(1);
+  };
+
+  const filteredPosts = [...(posts || [])]
+    .sort(handleSorting(sortType))
+    .filter((post) =>
+      searchQueryState === '' ||
+      post.title?.toLowerCase().includes(searchQueryState.toLowerCase()) ||
+      post.body?.toLowerCase().includes(searchQueryState.toLowerCase())
+    );
 
   const handlePaginationChange = (e, value) => setPage(value);
 
@@ -34,9 +46,7 @@ const QuestionsPage = ({getPosts, post: {posts, loading}}) => {
     <>
       <div id='mainbar' className='questions-page fc-black-800'>
         <div className='questions-grid'>
-          <h3 className='questions-headline'>
-            {searchQuery ? 'Search Results' : 'All Questions'}
-          </h3>
+          <h3 className='questions-headline'>All Questions</h3>
           <div className='questions-btn'>
             <LinkButton
               text={'Ask Question'}
@@ -45,38 +55,37 @@ const QuestionsPage = ({getPosts, post: {posts, loading}}) => {
             />
           </div>
         </div>
-        {searchQuery ? (
-          <div className='search-questions'>
-            <span style={{color: '#acb2b8', fontSize: '12px'}}>
-              Results for {searchQuery}
-            </span>
-            <SearchBox placeholder={'Search...'} name={'search'} pt={'mt8'} />
-          </div>
-        ) : (
-          ''
-        )}
         <div className='questions-tabs'>
-          <span>
-            {new Intl.NumberFormat('en-IN').format(posts.length)} questions
-          </span>
-          <ButtonGroup
-            buttons={['Newest', 'Top', 'Views', 'Oldest']}
-            selected={sortType}
-            setSelected={setSortType}
+          <SearchBox
+            placeholder={'Search...'}
+            handleChange={handleSearchChange}
+            width={'220px'}
           />
+          <div className='right-side-tools'>
+            <span className='item-count'>
+              {new Intl.NumberFormat('en-IN').format(filteredPosts.length)} questions
+            </span>
+            <ButtonGroup
+              buttons={['Newest', 'Top', 'Views', 'Oldest']}
+              selected={sortType}
+              setSelected={setSortType}
+            />
+          </div>
         </div>
         <div className='questions'>
-          {posts
-            .filter((post) => post.title.toLowerCase().includes(searchQuery ? searchQuery : ''))
-            ?.sort(handleSorting(sortType))
-            .slice((page - 1) * itemsPerPage, (page - 1) * itemsPerPage + itemsPerPage)
-            .map((post, index) => (
-              <PostItem key={index} post={post} />
-            ))}
+          {filteredPosts.length === 0 ? (
+            <p style={{padding: '24px 16px', color: '#9199a1'}}>No questions match your search.</p>
+          ) : (
+            filteredPosts
+              .slice((page - 1) * itemsPerPage, (page - 1) * itemsPerPage + itemsPerPage)
+              .map((post, index) => (
+                <PostItem key={index} post={post} />
+              ))
+          )}
         </div>
         <Pagination
           page={page}
-          itemList={posts.filter((post) => post.title.toLowerCase().includes(searchQuery ? searchQuery : ''))}
+          itemList={filteredPosts}
           itemsPerPage={itemsPerPage}
           handlePaginationChange={handlePaginationChange}
         />

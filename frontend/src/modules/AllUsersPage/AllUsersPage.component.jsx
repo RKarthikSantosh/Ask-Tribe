@@ -37,22 +37,22 @@ const AllUsersPage = ({ getUsers, user: { users, loading } }) => {
     <>
       <div id="mainbar" className="users-page fc-black-800">
         <h1 className="headline">Users</h1>
-        <div className="headline-count">
-          <span>
-            {new Intl.NumberFormat("en-IN").format(users.length)} users
-          </span>
-        </div>
-        <div className="users-box pl16 pr16 pb16">
+        <div className="users-tabs">
           <SearchBox
             placeholder={"filter by user"}
             handleChange={handleChange}
             width={"200px"}
           />
-          <ButtonGroup
-            buttons={["Popular", "Name", "Active", "New Users"]}
-            selected={sortType}
-            setSelected={setSortType}
-          />
+          <div className="right-side-tools">
+            <span className="item-count">
+              {new Intl.NumberFormat("en-IN").format(users.length)} users
+            </span>
+            <ButtonGroup
+              buttons={["Popular", "Name", "Active", "New Users"]}
+              selected={sortType}
+              setSelected={setSortType}
+            />
+          </div>
         </div>
         <div className="user-browser">
           <div className="grid-layout">
