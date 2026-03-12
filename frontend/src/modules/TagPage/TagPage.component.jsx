@@ -45,10 +45,6 @@ const TagPage = ({getTag, getTagPosts, tag, post: {posts, loading}}) => {
             />
           </div>
         </div>
-        <p
-          className='fs-body'
-          dangerouslySetInnerHTML={{__html: tag.tag.description}}
-        />
         <div className='questions-tabs'>
           <span>
             {new Intl.NumberFormat('en-IN').format(tag.tag.posts_count)}{' '}

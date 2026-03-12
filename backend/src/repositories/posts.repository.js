@@ -278,6 +278,7 @@ exports.countForAll = async (tagName = '') => {
       model: TagsModel,
       required: false,
       attributes: [],
+      through: { attributes: [] },
     });
   }
 

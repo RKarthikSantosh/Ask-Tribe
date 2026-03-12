@@ -127,7 +127,7 @@ exports.retrieveAll = async (result) => {
 exports.retrieveAllTag = async (tagName, result) => {
   const postsMap = await PostsRepository.retrieveAll(tagName);
 
-  const postCounts = await PostsRepository.countForAll();
+  const postCounts = await PostsRepository.countForAll(tagName);
 
   const postCountsMap = postCounts.map((post) => utils.array.sequelizeResponse(post, 'id', 'answer_count', 'comment_count'));
 

@@ -6,6 +6,7 @@ import {getPosts} from '../../redux/posts/posts.actions';
 import LinkButton from '../../components/molecules/LinkButton/LinkButton.component';
 import PostItem from '../../components/molecules/PostItem/PostItem.component';
 import Spinner from '../../components/molecules/Spinner/Spinner.component';
+import SearchBox from '../../components/molecules/SearchBox/SearchBox.component';
 import handleSorting from "../../utils/handleSorting";
 import Pagination from "../../components/organisms/Pagination/Pagination.component";
 import ButtonGroup from '../../components/molecules/ButtonGroup/ButtonGroup.component';
@@ -21,10 +22,25 @@ const HomePage = ({getPosts, post: {posts, loading}}) => {
   }, [getPosts]);
 
   const [page, setPage] = useState(1);
-  const [sortType, setSortType] = useState('Newest')
+  const [sortType, setSortType] = useState('Newest');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handlePaginationChange = (e, value) => setPage(value);
-  
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+    setPage(1);
+  };
+
+  const filteredPosts = [...(posts || [])]
+    .sort(handleSorting(sortType))
+    .filter(handleFilter(sortType))
+    .filter((post) =>
+      searchQuery === '' ||
+      post.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      post.body?.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
   return loading || !posts ? (
     <Spinner type='page' width='75px' height='200px' />
   ) : (
@@ -41,10 +57,15 @@ const HomePage = ({getPosts, post: {posts, loading}}) => {
           </div>
         </div>
         <div className='questions-tabs'>
-        <span>
-            {new Intl.NumberFormat('en-IN').format(posts.length)} questions
+          <span>
+            {new Intl.NumberFormat('en-IN').format(filteredPosts.length)} questions
           </span>
           <div className="btns-filter">
+            <SearchBox
+              placeholder={'Search questions...'}
+              handleChange={handleSearchChange}
+              width={'220px'}
+            />
             <ButtonGroup
               buttons={['Newest', 'Today', 'Week', 'Month', 'Year']}
               selected={sortType}
@@ -54,20 +75,20 @@ const HomePage = ({getPosts, post: {posts, loading}}) => {
         </div>
         <div className="questions">
           <div className="postQues">
-            {posts
-              .sort(handleSorting(sortType))
-              .filter(handleFilter(sortType))
-              .slice((page - 1) * itemsPerPage, (page - 1) * itemsPerPage + itemsPerPage)
-              .map((post, index) => (
-                <PostItem key={index} post={post} />
-              ))}
+            {filteredPosts.length === 0 ? (
+              <p style={{padding: '24px 16px', color: '#9199a1'}}>No questions match your search.</p>
+            ) : (
+              filteredPosts
+                .slice((page - 1) * itemsPerPage, (page - 1) * itemsPerPage + itemsPerPage)
+                .map((post, index) => (
+                  <PostItem key={index} post={post} />
+                ))
+            )}
           </div>
         </div>
         <Pagination
           page={page}
-          itemList={posts
-            .sort(handleSorting(sortType))
-            .filter(handleFilter(sortType))}
+          itemList={filteredPosts}
           itemsPerPage={itemsPerPage}
           handlePaginationChange={handlePaginationChange}
         />

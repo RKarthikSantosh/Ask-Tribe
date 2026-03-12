@@ -16,13 +16,15 @@ exports.retrieveAll = async (result) => {
     include: {
       model: PostsModel,
       attributes: [],
+      through: { attributes: [] },
     },
     group: ['tags.id'],
     order: [[Sequelize.col('posts_count'), 'DESC']],
   })
     .catch((error) => {
       console.log(error);
-      return result(responseHandler(false, 500, 'Something went wrong', null), null);
+      result(responseHandler(false, 500, 'Something went wrong', null), null);
+      throw error;
     });
 
   const tagsMap = queryResult.map((tag) => utils.array.sequelizeResponse(
@@ -54,13 +56,15 @@ exports.retrieveOneWithCount = async (tagName, result) => {
     include: {
       model: PostsModel,
       attributes: [],
+      through: { attributes: [] },
     },
     where: { tagname: tagName },
     group: ['tags.id'],
   })
     .catch((error) => {
       console.log(error);
-      return result(responseHandler(false, 500, 'Something went wrong', null), null);
+      result(responseHandler(false, 500, 'Something went wrong', null), null);
+      throw error;
     });
 
   if (utils.conditional.isNull(queryResult)) {
@@ -83,7 +87,7 @@ exports.bulkCreate = async (tags) => await TagsModel.bulkCreate(tags)
   .catch((error) => {
     console.log(error);
     result(responseHandler(false, 500, 'Something went wrong', null), null);
-    return null;
+    throw error;
   });
 
 exports.retrieveOne = async (tagname) => {
