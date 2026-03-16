@@ -24,6 +24,7 @@ export default function users(state = initialState, action) {
     case USER_ERROR:
       return {
         ...state,
+        user: null,
         error: action.payload,
         loading: false,
       };

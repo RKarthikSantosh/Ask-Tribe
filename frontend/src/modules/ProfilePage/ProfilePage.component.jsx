@@ -11,18 +11,31 @@ import Spinner from '../../components/molecules/Spinner/Spinner.component';
 
 import './ProfilePage.styles.scss';
 
-const ProfilePage = ({getProfile, getUserPosts, user: {user, loading}, post: {posts}}) => {
+const ProfilePage = ({getProfile, getUserPosts, user: {user, loading, error}, post: {posts}}) => {
   const { id } = useParams();
 
   useEffect(() => {
-    getProfile(id);
-    getUserPosts(id);
-    // eslint-disable-next-line
+    if (id) {
+      getProfile(id);
+      getUserPosts(id);
+    }
   }, [getProfile, getUserPosts, id]);
 
-  return loading || user === null ? (
-    <Spinner type='page' width='75px' height='200px' />
-  ) : (
+  const hasProfileMismatch = user && String(user.id) !== String(id);
+
+  if (loading || hasProfileMismatch) {
+    return <Spinner type='page' width='75px' height='200px' />;
+  }
+
+  if (!user) {
+    return (
+      <div id='mainbar' className='user-main-bar pl24 pt24'>
+        <p>{error?.msg || 'Unable to load this user profile.'}</p>
+      </div>
+    );
+  }
+
+  return (
     <>
       <div id='mainbar' className='user-main-bar pl24 pt24'>
         <div className='user-card'>

@@ -43,6 +43,9 @@ exports.retrieveAll = async (result) => {
           model: TagsModel,
           attributes: [],
           required: false,
+          through: {
+            attributes: [],
+          },
         },
       },
     ],
@@ -106,6 +109,9 @@ exports.retrieveOneWithCounts = async (id) => {
           attributes: [],
           required: false,
           model: TagsModel,
+          through: {
+            attributes: [],
+          },
         },
       },
       {
