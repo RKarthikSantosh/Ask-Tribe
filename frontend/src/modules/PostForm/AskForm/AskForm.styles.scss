@@ -250,6 +250,35 @@
           color: #3c4146;
           font-size: 12px;
         }
+
+        .ask-ai-assistant-picker {
+          margin-top: 10px;
+
+          .ask-ai-picker-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #2f5873;
+            margin-bottom: 6px;
+          }
+
+          .ask-ai-picker-select {
+            width: 100%;
+            max-width: 260px;
+            border: 1px solid #9ebad0;
+            border-radius: 4px;
+            padding: 6px 8px;
+            font-size: 13px;
+            background: #fff;
+            color: #102a43;
+
+            &:disabled {
+              background: #f1f2f3;
+              color: #6a737c;
+              border-color: #c8ccd0;
+            }
+          }
+        }
       }
     }
   }

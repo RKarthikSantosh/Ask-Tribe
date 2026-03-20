@@ -75,6 +75,16 @@ const App = () => {
           >
             <CommunityPage/>
           </LayoutRoute>
+          <LayoutRoute
+            exact
+            path='/ai-agent'
+            title='AI Agent - AskTribe'
+          >
+            <AllUsersPage
+              title='AI Agent'
+              allowedUsernames={['ramineni_ai', 'eswar_ai']}
+            />
+          </LayoutRoute>
           <BaseRoute
             exact
             path='/register'

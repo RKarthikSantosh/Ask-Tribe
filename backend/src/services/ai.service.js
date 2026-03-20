@@ -6,6 +6,7 @@ const { UsersModel, AnswersModel } = require('../models');
 const { AnswerRepliesRepository } = require('../repositories');
 
 const DEFAULT_AI_USERNAME = 'ramineni_ai';
+const SECOND_AI_USERNAME = 'eswar_ai';
 const DEFAULT_AI_PASSWORD = 'ai-assistant-not-for-login';
 const DEFAULT_OPENAI_MODEL = 'gpt-4o-mini';
 const DEFAULT_OPENAI_ENDPOINT = 'https://api.openai.com/v1/chat/completions';
@@ -88,30 +89,66 @@ const createFallbackAnswer = ({ title, body }) => {
   return `Start with one direct fix for "${compactTitle || 'this question'}" and test again. If it still fails, verify the input and expected output step by step. Then share the exact error and a minimal code snippet for a more precise fix.`;
 };
 
-const resolveModelConfig = () => {
-  if (process.env.GROQ_API_KEY) {
-    return {
-      provider: 'groq',
-      apiKey: process.env.GROQ_API_KEY,
-      model: process.env.GROQ_MODEL || DEFAULT_GROQ_MODEL,
-      endpoint: process.env.GROQ_API_URL || DEFAULT_GROQ_ENDPOINT,
-    };
+const resolveModelConfigs = (preferredAssistant = DEFAULT_AI_USERNAME) => {
+  const configs = [];
+  const groqPrimary = process.env.GROQ_API_KEY;
+  const groqSecondary = process.env.GROQ_API_KEY_2;
+
+  if (preferredAssistant === SECOND_AI_USERNAME) {
+    if (groqSecondary) {
+      configs.push({
+        provider: 'groq',
+        apiKey: groqSecondary,
+        model: process.env.GROQ_MODEL || DEFAULT_GROQ_MODEL,
+        endpoint: process.env.GROQ_API_URL || DEFAULT_GROQ_ENDPOINT,
+      });
+    }
+
+    if (groqPrimary) {
+      configs.push({
+        provider: 'groq',
+        apiKey: groqPrimary,
+        model: process.env.GROQ_MODEL || DEFAULT_GROQ_MODEL,
+        endpoint: process.env.GROQ_API_URL || DEFAULT_GROQ_ENDPOINT,
+      });
+    }
+  } else {
+    if (groqPrimary) {
+      configs.push({
+        provider: 'groq',
+        apiKey: groqPrimary,
+        model: process.env.GROQ_MODEL || DEFAULT_GROQ_MODEL,
+        endpoint: process.env.GROQ_API_URL || DEFAULT_GROQ_ENDPOINT,
+      });
+    }
+
+    if (groqSecondary) {
+      configs.push({
+        provider: 'groq',
+        apiKey: groqSecondary,
+        model: process.env.GROQ_MODEL || DEFAULT_GROQ_MODEL,
+        endpoint: process.env.GROQ_API_URL || DEFAULT_GROQ_ENDPOINT,
+      });
+    }
   }
 
   if (process.env.OPENAI_API_KEY) {
-    return {
+    configs.push({
       provider: 'openai',
       apiKey: process.env.OPENAI_API_KEY,
       model: process.env.OPENAI_MODEL || DEFAULT_OPENAI_MODEL,
       endpoint: process.env.OPENAI_API_URL || DEFAULT_OPENAI_ENDPOINT,
-    };
+    });
   }
 
-  return null;
+  return configs;
 };
 
-const getAssistantUser = async () => {
-  const username = process.env.AI_ASSISTANT_USERNAME || DEFAULT_AI_USERNAME;
+const getAssistantUser = async (assistantUsername = DEFAULT_AI_USERNAME) => {
+  const normalizedAssistant = assistantUsername === SECOND_AI_USERNAME
+    ? SECOND_AI_USERNAME
+    : DEFAULT_AI_USERNAME;
+  const username = normalizedAssistant;
 
   let assistant = await UsersModel.findOne({ where: { username } });
   if (assistant) {
@@ -136,13 +173,13 @@ const getAssistantUser = async () => {
   return assistant;
 };
 
-const generateAnswer = async ({ title, body, tagName }) => {
-  const modelConfig = resolveModelConfig();
-  if (!modelConfig) {
+const generateAnswer = async ({ title, body, tagName, assistantUsername }) => {
+  const modelConfigs = resolveModelConfigs(assistantUsername);
+  if (!modelConfigs.length) {
     return createFallbackAnswer({ title, body });
   }
 
-  try {
+  for (const modelConfig of modelConfigs) {
     const payload = {
       model: modelConfig.model,
       temperature: 0.4,
@@ -167,30 +204,46 @@ const generateAnswer = async ({ title, body, tagName }) => {
       payload.max_tokens = 1800;
     }
 
-    const response = await axios.post(modelConfig.endpoint, payload, {
-      headers: {
-        Authorization: `Bearer ${modelConfig.apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      timeout: 25000,
-    });
+    try {
+      const response = await axios.post(modelConfig.endpoint, payload, {
+        headers: {
+          Authorization: `Bearer ${modelConfig.apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        timeout: 25000,
+      });
 
-    return response?.data?.choices?.[0]?.message?.content?.trim()
-      || createFallbackAnswer({ title, body });
-  } catch (error) {
-    console.log('AI answer generation failed:', error?.response?.data || error.message);
-    return createFallbackAnswer({ title, body });
+      const content = response?.data?.choices?.[0]?.message?.content?.trim();
+      if (content) {
+        return content;
+      }
+    } catch (error) {
+      console.log('AI answer generation failed:', error?.response?.data || error.message);
+    }
   }
+
+  return createFallbackAnswer({ title, body });
 };
 
-exports.createAssistantAnswer = async ({ postId, title, body, tagName }) => {
+exports.createAssistantAnswer = async ({
+  postId,
+  title,
+  body,
+  tagName,
+  assistantUsername = DEFAULT_AI_USERNAME,
+}) => {
   try {
-    const content = await generateAnswer({ title, body, tagName });
+    const content = await generateAnswer({
+      title,
+      body,
+      tagName,
+      assistantUsername,
+    });
     if (!content) {
       return null;
     }
 
-    const assistant = await getAssistantUser();
+    const assistant = await getAssistantUser(assistantUsername);
     if (!assistant) {
       return null;
     }
@@ -206,19 +259,25 @@ exports.createAssistantAnswer = async ({ postId, title, body, tagName }) => {
   }
 };
 
-exports.createAssistantReplyForAnswer = async ({ answerId, replyBody, answerBody }) => {
+exports.createAssistantReplyForAnswer = async ({
+  answerId,
+  replyBody,
+  answerBody,
+  assistantUsername = DEFAULT_AI_USERNAME,
+}) => {
   try {
     const content = await generateAnswer({
       title: 'Reply to follow-up question',
       body: buildReplyPrompt({ answerBody, replyBody }),
       tagName: 'follow-up',
+      assistantUsername,
     });
 
     if (!content) {
       return null;
     }
 
-    const assistant = await getAssistantUser();
+    const assistant = await getAssistantUser(assistantUsername);
     if (!assistant) {
       return null;
     }

@@ -62,6 +62,7 @@ exports.create = async (newPost, result) => {
         title: newPost.title,
         body: newPost.body,
         tagName: newPost.tagName,
+        assistantUsername: newPost.aiAssistant,
       });
     }
 

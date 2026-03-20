@@ -8,6 +8,7 @@ const Post = (post) => ({
   userId: post.userId,
   tagName: post.tagName,
   askAi: post.askAi,
+  aiAssistant: post.aiAssistant,
 });
 
 exports.getPosts = asyncHandler(async (req, res) => {
@@ -99,6 +100,7 @@ exports.addPost = asyncHandler(async (req, res) => {
   try {
     const askAiEnabled = req.body.askAi === true || req.body.ask_ai === true
       || req.body.askAi === 'true' || req.body.ask_ai === 'true';
+    const selectedAssistant = req.body.aiAssistant === 'eswar_ai' ? 'eswar_ai' : 'ramineni_ai';
 
     const post = Post({
       title: req.body.title,
@@ -106,6 +108,7 @@ exports.addPost = asyncHandler(async (req, res) => {
       userId: req.user.id,
       tagName: req.body.tagname,
       askAi: askAiEnabled,
+      aiAssistant: selectedAssistant,
     });
     // Save Post in the database
     await postsService.create(post, (err, data) => {

@@ -14,6 +14,7 @@ const AskForm = ({ addPost }) => {
     body: "",
     tagname: "",
     askAi: false,
+    aiAssistant: "ramineni_ai",
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -24,7 +25,7 @@ const AskForm = ({ addPost }) => {
 
   const markdownEditorRef = useRef(null);
 
-  const { title, body, tagname, askAi } = formData;
+  const { title, body, tagname, askAi, aiAssistant } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -71,13 +72,14 @@ const AskForm = ({ addPost }) => {
     // if there are errors, don't submit
     if (errors.length > 0) return;
 
-    addPost({ title, body, tagname, askAi });
+    addPost({ title, body, tagname, askAi, aiAssistant });
 
     setFormData({
       title: "",
       body: "",
       tagname: "",
       askAi: false,
+      aiAssistant: "ramineni_ai",
     });
     history.push("/");
   };
@@ -173,6 +175,22 @@ const AskForm = ({ addPost }) => {
                   ? "AI will generate an answer from your question title and body."
                   : "Enable this to get an automatic AI answer after posting."}
               </p>
+              <div className="ask-ai-assistant-picker">
+                <label htmlFor="aiAssistant" className="ask-ai-picker-label">
+                  Choose AI assistant
+                </label>
+                <select
+                  id="aiAssistant"
+                  name="aiAssistant"
+                  className="ask-ai-picker-select"
+                  value={aiAssistant}
+                  onChange={(e) => onChange(e)}
+                  disabled={!askAi}
+                >
+                  <option value="ramineni_ai">ramineni_ai</option>
+                  <option value="eswar_ai">eswar_ai</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>

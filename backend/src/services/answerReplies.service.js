@@ -12,12 +12,14 @@ exports.create = async (newReply, result) => {
       const answer = await AnswersRepository.findById(newReply.answerId);
       const answerUsername = answer?.get ? answer.get('username') : answer?.username;
       const answerUserId = answer?.get ? answer.get('user_id') : answer?.user_id;
+      const aiAssistantNames = ['ramineni_ai', 'eswar_ai'];
 
-      if (answer && answerUsername === 'ramineni_ai' && newReply.userId !== answerUserId) {
+      if (answer && aiAssistantNames.includes(answerUsername) && newReply.userId !== answerUserId) {
         await aiService.createAssistantReplyForAnswer({
           answerId: newReply.answerId,
           replyBody: newReply.body,
           answerBody: answer?.get ? answer.get('body') : answer?.body,
+          assistantUsername: answerUsername,
         });
       }
     } catch (error) {

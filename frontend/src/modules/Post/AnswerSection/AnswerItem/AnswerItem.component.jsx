@@ -13,6 +13,8 @@ import UserCard from "../../../../components/molecules/UserCard/UserCard.compone
 import "./AnswerItem.styles.scss";
 import censorBadWords from "../../../../utils/censorBadWords";
 
+const AI_ASSISTANT_USERNAMES = ["ramineni_ai", "eswar_ai"];
+
 const decodeHtmlEntities = (value = "") => {
   if (typeof document === "undefined") {
     return value;
@@ -151,7 +153,7 @@ const AnswerItem = ({
   const upvotesArr = Array.isArray(upvotes) ? upvotes : [];
   const downvotesArr = Array.isArray(downvotes) ? downvotes : [];
   const voteCount = upvotesArr.length - downvotesArr.length;
-  const isAiAnswer = username === "ramineni_ai";
+  const isAiAnswer = AI_ASSISTANT_USERNAMES.includes(username);
   const aiCodeAnswer = isAiAnswer ? parseAiCodeAnswer(body) : null;
   const aiPlainText = isAiAnswer
     ? String(body || "").replace(/<[^>]+>/g, "").trim()
@@ -285,7 +287,7 @@ const AnswerItem = ({
             ) : replies.length ? (
               <div className="reply-list">
                 {replies.map((reply) => {
-                  const replyIsAi = reply.username === "ramineni_ai";
+                  const replyIsAi = AI_ASSISTANT_USERNAMES.includes(reply.username);
                   const aiReplyCode = replyIsAi ? parseAiCodeAnswer(reply.body) : null;
                   return (
                     <div className={`reply-item ${replyIsAi ? "reply-ai" : ""}`} key={reply.id}>

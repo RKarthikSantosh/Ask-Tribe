@@ -14,7 +14,12 @@ import "./AllUsersPage.styles.scss";
 
 const itemsPerPage = 18;
 
-const AllUsersPage = ({ getUsers, user: { users, loading } }) => {
+const AllUsersPage = ({
+  getUsers,
+  user: { users, loading },
+  title = "Users",
+  allowedUsernames = null,
+}) => {
   useEffect(() => {
     getUsers();
   }, [getUsers]);
@@ -22,6 +27,14 @@ const AllUsersPage = ({ getUsers, user: { users, loading } }) => {
   const [page, setPage] = useState(1);
   const [fetchSearch, setSearch] = useState("");
   const [sortType, setSortType] = useState("Popular");
+
+  const usersList = Array.isArray(users) ? users : [];
+  const visibleUsers = Array.isArray(allowedUsernames)
+    ? usersList.filter((user) => allowedUsernames.includes(user.username))
+    : usersList;
+  const filteredUsers = visibleUsers.filter((user) =>
+    user.username.toLowerCase().includes(fetchSearch.toLowerCase())
+  );
 
   const handlePaginationChange = (e, value) => setPage(value);
 
@@ -36,7 +49,7 @@ const AllUsersPage = ({ getUsers, user: { users, loading } }) => {
   ) : (
     <>
       <div id="mainbar" className="users-page fc-black-800">
-        <h1 className="headline">Users</h1>
+        <h1 className="headline">{title}</h1>
         <div className="users-tabs">
           <SearchBox
             placeholder={"filter by user"}
@@ -45,7 +58,7 @@ const AllUsersPage = ({ getUsers, user: { users, loading } }) => {
           />
           <div className="right-side-tools">
             <span className="item-count">
-              {new Intl.NumberFormat("en-IN").format(users.length)} users
+              {new Intl.NumberFormat("en-IN").format(filteredUsers.length)} users
             </span>
             <ButtonGroup
               buttons={["Popular", "Name", "Active", "New Users"]}
@@ -56,10 +69,7 @@ const AllUsersPage = ({ getUsers, user: { users, loading } }) => {
         </div>
         <div className="user-browser">
           <div className="grid-layout">
-            {users
-              .filter((user) =>
-                user.username.toLowerCase().includes(fetchSearch.toLowerCase())
-              )
+            {filteredUsers
               ?.sort(handleSorting(sortType, "users"))
               .slice(
                 (page - 1) * itemsPerPage,
@@ -72,9 +82,7 @@ const AllUsersPage = ({ getUsers, user: { users, loading } }) => {
         </div>
         <Pagination
           page={page}
-          itemList={users.filter((user) =>
-            user.username.toLowerCase().includes(fetchSearch.toLowerCase())
-          )}
+          itemList={filteredUsers}
           itemsPerPage={itemsPerPage}
           handlePaginationChange={handlePaginationChange}
         />
@@ -86,6 +94,8 @@ const AllUsersPage = ({ getUsers, user: { users, loading } }) => {
 AllUsersPage.propTypes = {
   getUsers: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
+  title: PropTypes.string,
+  allowedUsernames: PropTypes.arrayOf(PropTypes.string),
 };
 
 const mapStateToProps = (state) => ({
