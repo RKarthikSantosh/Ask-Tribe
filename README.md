@@ -20,6 +20,9 @@ This repository contains:
 	- Ask community-specific questions
 	- Answer and comment on community questions
 	- Member-only community visibility and access
+- Optional Ask AI while posting:
+	- Users can enable or disable Ask AI in the question form
+	- When enabled, backend generates an answer using question title and body
 
 ## Tech Stack
 
@@ -66,7 +69,19 @@ PASSWORD=your_mysql_password
 
 JWT_SECRET=community_based_qna_portal_for_iomp
 JWT_EXPIRES_IN=1
+
+# Optional Ask AI setup
+OPENAI_API_KEY=your_openai_api_key
+OPENAI_MODEL=gpt-4o-mini
+# or use Groq (OpenAI-compatible endpoint)
+GROQ_API_KEY=your_groq_api_key
+GROQ_MODEL=openai/gpt-oss-20b
 ```
+
+Ask AI responses are generated in a short Stack Overflow-like format:
+- Short answer
+- Why (brief reason)
+- Fix steps
 
 4. Start backend server:
 

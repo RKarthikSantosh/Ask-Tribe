@@ -18,8 +18,7 @@ const Post = ({ getPost, post: { post, loading } }) => {
 
   useEffect(() => {
     getPost(id);
-    // eslint-disable-next-line
-  }, [getPost]);
+  }, [getPost, id]);
 
   return loading || post === null ? (
     <Spinner type="page" width="75px" height="200px" />

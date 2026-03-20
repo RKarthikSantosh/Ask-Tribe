@@ -7,6 +7,7 @@ const Post = (post) => ({
   body: post.body,
   userId: post.userId,
   tagName: post.tagName,
+  askAi: post.askAi,
 });
 
 exports.getPosts = asyncHandler(async (req, res) => {
@@ -96,11 +97,15 @@ exports.addPost = asyncHandler(async (req, res) => {
       .json(responseHandler(false, 400, errors.array()[0].msg, null));
   }
   try {
+    const askAiEnabled = req.body.askAi === true || req.body.ask_ai === true
+      || req.body.askAi === 'true' || req.body.ask_ai === 'true';
+
     const post = Post({
       title: req.body.title,
       body: req.body.body,
       userId: req.user.id,
       tagName: req.body.tagname,
+      askAi: askAiEnabled,
     });
     // Save Post in the database
     await postsService.create(post, (err, data) => {

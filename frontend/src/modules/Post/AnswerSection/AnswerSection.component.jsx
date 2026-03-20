@@ -13,9 +13,10 @@ import './AnswerSection.styles.scss';
 
 const AnswerSection = ({getAnswers, answer, post: {post}}) => {
   useEffect(() => {
-    getAnswers(post.id);
-    // eslint-disable-next-line
-  }, [getAnswers]);
+    if (post?.id) {
+      getAnswers(post.id);
+    }
+  }, [getAnswers, post?.id]);
 
   const [sortType, setSortType] = useState('Votes');
 
@@ -34,7 +35,7 @@ const AnswerSection = ({getAnswers, answer, post: {post}}) => {
             />
           </div>
         </div>
-        {answer.loading === null ? (
+        {answer.loading ? (
           <Spinner width='25px' height='25px' />
         ) : (
           [...answer.answers]?.sort(handleSorting(sortType)).map((answer, index) => (

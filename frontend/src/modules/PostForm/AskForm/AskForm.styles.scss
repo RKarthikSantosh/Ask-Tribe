@@ -140,6 +140,49 @@
           }
         }
       }
+
+      .ask-ai-grid {
+        margin-bottom: 8px;
+
+        .ask-ai-label {
+          font-size: 14px;
+          font-weight: 600;
+          color: #0c0d0e;
+          margin-bottom: 8px;
+        }
+
+        .ask-ai-toggle {
+          border-radius: 6px;
+          border: 1px solid #7aa7c7;
+          padding: 8px 14px;
+          font-size: 13px;
+          font-weight: 700;
+          cursor: pointer;
+          transition: all 0.2s ease;
+
+          &.disabled {
+            background: #f1f2f3;
+            color: #3b4045;
+            border-color: #c8ccd0;
+          }
+
+          &.enabled {
+            background: #2f6f44;
+            color: #fff;
+            border-color: #2f6f44;
+          }
+
+          &:hover {
+            filter: brightness(0.96);
+          }
+        }
+
+        .ask-ai-desc {
+          margin: 8px 0 0 0;
+          color: #3c4146;
+          font-size: 12px;
+        }
+      }
     }
   }
 }

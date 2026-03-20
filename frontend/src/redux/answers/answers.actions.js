@@ -14,12 +14,20 @@ export const getAnswers = (id) => async (dispatch) => {
 
     dispatch({
       type: GET_ANSWERS,
-      payload: res.data.data,
+      payload: Array.isArray(res.data.data) ? res.data.data : [],
     });
   } catch (err) {
+    if (err.response?.status === 404) {
+      dispatch({
+        type: GET_ANSWERS,
+        payload: [],
+      });
+      return;
+    }
+
     dispatch({
       type: ANSWER_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
+      payload: { msg: err.response?.statusText || 'Server Error', status: err.response?.status || 500 },
     });
   }
 };

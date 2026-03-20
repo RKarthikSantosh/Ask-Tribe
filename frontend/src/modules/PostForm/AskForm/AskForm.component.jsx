@@ -13,6 +13,7 @@ const AskForm = ({ addPost }) => {
     title: "",
     body: "",
     tagname: "",
+    askAi: false,
   });
 
   const [formErrors, setFormErrors] = useState({});
@@ -23,10 +24,12 @@ const AskForm = ({ addPost }) => {
 
   const markdownEditorRef = useRef(null);
 
-  const { title, body, tagname } = formData;
+  const { title, body, tagname, askAi } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  const onToggleAskAi = () =>
+    setFormData((prev) => ({ ...prev, askAi: !prev.askAi }));
   const history = useHistory();
 
   const validateFormData = () => {
@@ -68,12 +71,13 @@ const AskForm = ({ addPost }) => {
     // if there are errors, don't submit
     if (errors.length > 0) return;
 
-    addPost({ title, body, tagname });
+    addPost({ title, body, tagname, askAi });
 
     setFormData({
       title: "",
       body: "",
       tagname: "",
+      askAi: false,
     });
     history.push("/");
   };
@@ -139,6 +143,22 @@ const AskForm = ({ addPost }) => {
                 required
               />
               <p className="fc-error fw-bold ml8 mt4">{formErrors.tagname}</p>
+            </div>
+            <div className="ask-ai-grid">
+              <div className="ask-ai-label">Ask AI</div>
+              <button
+                type="button"
+                className={`ask-ai-toggle ${askAi ? "enabled" : "disabled"}`}
+                onClick={onToggleAskAi}
+                aria-pressed={askAi}
+              >
+                {askAi ? "Ask AI: ON" : "Ask AI: OFF"}
+              </button>
+              <p className="ask-ai-desc">
+                {askAi
+                  ? "AI will generate an answer from your question title and body."
+                  : "Enable this to get an automatic AI answer after posting."}
+              </p>
             </div>
           </div>
         </div>

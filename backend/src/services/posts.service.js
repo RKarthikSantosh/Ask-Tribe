@@ -1,5 +1,6 @@
 const db = require('../config/db.config');
 const { responseHandler, investApi } = require('../helpers');
+const aiService = require('./ai.service');
 const utils = require('../utils');
 const {
   PostsRepository,
@@ -54,6 +55,15 @@ exports.create = async (newPost, result) => {
     }
 
     await PostTagRepository.bulkCreate(mapAllTags);
+
+    if (newPost.askAi) {
+      await aiService.createAssistantAnswer({
+        postId: post.id,
+        title: newPost.title,
+        body: newPost.body,
+        tagName: newPost.tagName,
+      });
+    }
 
     result(null, responseHandler(true, 200, 'Post Created', post.id));
 
