@@ -91,13 +91,6 @@ const MobileSideBar = (props) => {
 							>
 								<p>Communities</p>
 							</NavLink>
-							<NavLink
-								activeClassName="active"
-								className="link"
-								to="/ai-agent"
-							>
-								<p>AI Agent</p>
-							</NavLink>
 						</div>
 					</div>
 				</div>

@@ -118,9 +118,19 @@ exports.listQuestions = async (communityId) => {
   return items.map((item) => item.get({ plain: true }));
 };
 
-exports.findQuestionById = async (questionId) => CommunityQuestionsModel.findOne({
-  where: { id: questionId },
-});
+exports.findQuestionById = async (questionId) => {
+  const item = await CommunityQuestionsModel.findOne({
+    where: { id: questionId },
+    include: [
+      {
+        model: UsersModel,
+        attributes: ['id', 'username', 'gravatar'],
+        required: false,
+      },
+    ],
+  });
+  return item ? item.get({ plain: true }) : null;
+};
 
 exports.createQuestionAnswer = async ({ questionId, userId, body }) => CommunityQuestionAnswersModel.create({
   community_question_id: questionId,

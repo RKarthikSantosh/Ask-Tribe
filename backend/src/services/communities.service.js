@@ -248,3 +248,25 @@ exports.retrieveQuestionComments = async (questionId, requesterId, result) => {
     return result(responseHandler(false, 500, 'Something went wrong', null), null);
   }
 };
+exports.retrieveQuestion = async (questionId, requesterId, result) => {
+  try {
+    const question = await CommunitiesRepository.findQuestionById(questionId);
+    if (!question) {
+      return result(responseHandler(false, 404, 'Community question not found', null), null);
+    }
+
+    const membership = await CommunitiesRepository.isCommunityMember({
+      communityId: question.community_id,
+      userId: requesterId,
+    });
+
+    if (!membership) {
+      return result(responseHandler(false, 403, 'Only community members can view this', null), null);
+    }
+
+    return result(null, responseHandler(true, 200, 'Success', question));
+  } catch (error) {
+    console.log(error);
+    return result(responseHandler(false, 500, 'Something went wrong', null), null);
+  }
+};

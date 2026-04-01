@@ -189,3 +189,16 @@ exports.getQuestionComments = asyncHandler(async (req, res) => {
     return res.status(500).json(responseHandler(false, 500, 'Server Error', null));
   }
 });
+exports.getQuestion = asyncHandler(async (req, res) => {
+  try {
+    await communitiesService.retrieveQuestion(req.params.id, req.user.id, (err, data) => {
+      if (err) {
+        return res.status(err.code).json(err);
+      }
+      return res.status(data.code).json(data);
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json(responseHandler(false, 500, 'Server Error', null));
+  }
+});

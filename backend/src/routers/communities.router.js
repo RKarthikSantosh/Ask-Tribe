@@ -16,6 +16,9 @@ router.route('/:id/questions')
   .get(auth, communitiesController.getQuestions)
   .post(auth, communitiesController.createQuestion);
 
+router.route('/questions/:id')
+  .get(auth, communitiesController.getQuestion);
+
 router.route('/questions/:id/answers')
   .get(auth, communitiesController.getQuestionAnswers)
   .post(auth, communitiesController.addQuestionAnswer);

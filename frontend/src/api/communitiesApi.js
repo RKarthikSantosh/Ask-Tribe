@@ -4,6 +4,7 @@ import {
   communitiesData as _communitiesData,
   communityMembersData as _communityMembersData,
   communityQuestionsData as _communityQuestionsData,
+  communitySingleQuestionData as _communitySingleQuestionData,
   communityQuestionAnswersData as _communityQuestionAnswersData,
   communityQuestionCommentsData as _communityQuestionCommentsData,
 } from './urls';
@@ -32,6 +33,10 @@ export const addCommunityMember = (communityId, payload) => axios.post(
 
 export const getCommunityQuestions = (communityId) => axios.get(
   _communityQuestionsData.replace('{id}', communityId),
+);
+
+export const getCommunityQuestion = (questionId) => axios.get(
+  _communitySingleQuestionData.replace('{id}', questionId),
 );
 
 export const createCommunityQuestion = (communityId, payload) => axios.post(

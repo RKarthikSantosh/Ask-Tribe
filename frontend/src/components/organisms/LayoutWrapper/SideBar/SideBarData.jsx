@@ -15,8 +15,4 @@ export const SideBarData = [
     link: '/communities',
     text: 'Communities',
   },
-  {
-    link: '/ai-agent',
-    text: 'AI Agent',
-  },
 ]

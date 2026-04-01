@@ -13,6 +13,7 @@ import QuestionsPage from './modules/QuestionsPage/QuestionsPage.component';
 import AllTagsPage from './modules/AllTagsPage/AllTagsPage.component';
 import AllUsersPage from './modules/AllUsersPage/AllUsersPage.component';
 import CommunityPage from './modules/CommunityPage/CommunityPage.component';
+import CommunityQuestion from './modules/CommunityQuestion/CommunityQuestion.component';
 import Register from './modules/Register/Register.component';
 import Login from './modules/Login/Login.component';
 import Post from './modules/Post/Post.component';
@@ -75,16 +76,6 @@ const App = () => {
           >
             <CommunityPage/>
           </LayoutRoute>
-          <LayoutRoute
-            exact
-            path='/ai-agent'
-            title='AI Agent - AskTribe'
-          >
-            <AllUsersPage
-              title='AI Agent'
-              allowedUsernames={['ramineni_ai', 'eswar_ai']}
-            />
-          </LayoutRoute>
           <BaseRoute
             exact
             path='/register'
@@ -105,6 +96,13 @@ const App = () => {
             title='Question - AskTribe'
           >
             <Post/>
+          </LayoutRoute>
+          <LayoutRoute
+            exact
+            path='/communities/:communityId/questions/:questionId'
+            title='Community Question - AskTribe'
+          >
+            <CommunityQuestion/>
           </LayoutRoute>
           <LayoutRoute
             exact
