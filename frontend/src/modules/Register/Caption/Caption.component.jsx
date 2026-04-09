@@ -35,23 +35,6 @@ const Caption = () => {
             Save your favorite tags and filters
           </div>
         </div>
-        <div className='caption-item'>
-          <div className='grid-icon'>
-            <TrophyLogo/>
-          </div>
-          <div className='grid-cell'>Earn reputation and badges</div>
-        </div>
-        <div className='caption-item fc-black-600'>
-          <div>
-            Use the power of AskTribe inside your organization.
-            <br />
-            Try{' '}
-            <Link to='https://asktribe.com/teams'>
-              AskTribe for Teams — free trial
-            </Link>
-            .
-          </div>
-        </div>
       </div>
     </>
   );
