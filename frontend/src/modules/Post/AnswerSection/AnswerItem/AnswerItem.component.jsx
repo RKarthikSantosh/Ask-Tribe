@@ -363,20 +363,6 @@ const AnswerItem = ({
           <div className="answer-actions">
             <div className="action-btns">
               <div className="answer-menu">
-                <Link
-                  className="answer-links"
-                  title="short permalink to this question"
-                  to="/"
-                >
-                  share
-                </Link>
-                <Link
-                  className="answer-links"
-                  title="Follow this question to receive notifications"
-                  to="/"
-                >
-                  follow
-                </Link>
                 {!auth.loading &&
                   auth.isAuthenticated &&
                   user_id === auth.user.id && (

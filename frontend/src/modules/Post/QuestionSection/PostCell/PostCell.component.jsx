@@ -38,26 +38,12 @@ const PostCell = ({
           <div className="post-actions-extended">
             <div className="post-btns">
               <div className="post-menu">
-                <Link
-                  className="post-links"
-                  title="short permalink to this question"
-                  to="/"
-                >
-                  share
-                </Link>
-                <Link
-                  className="post-links"
-                  title="Follow this question to receive notifications"
-                  to="/"
-                >
-                  follow
-                </Link>
                 {!auth.loading &&
                   auth.isAuthenticated &&
                   user_id === auth.user.id && (
                     <Link
                       className="s-link s-link__danger"
-                      style={{ paddingLeft: "4px" }}
+                      style={{ paddingLeft: "4px", color: "#b5000f" }}
                       title="Delete the post"
                       onClick={(e) => deletePost(id)}
                       to="/questions"

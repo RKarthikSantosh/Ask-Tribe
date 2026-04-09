@@ -217,32 +217,22 @@ exports.retrieveUserPosts = async (userId) => {
   return postsMap;
 };
 
-exports.countCommentsForOne = async (postId) => await PostsModel.count({
+exports.countCommentsForOne = async (postId) => await CommentsModel.count({
   where: {
-    id: postId,
-  },
-  include: {
-    model: CommentsModel,
-    required: false,
-    attributes: [],
+    post_id: postId,
   },
 }).catch((error) => {
   console.log(error);
-  return result(responseHandler(false, 500, 'Something went wrong!', null), null);
+  throw new Error('Something went wrong!');
 });
 
-exports.countAnswersForOne = async (postId) => await PostsModel.count({
+exports.countAnswersForOne = async (postId) => await AnswersModel.count({
   where: {
-    id: postId,
-  },
-  include: {
-    model: AnswersModel,
-    required: false,
-    attributes: [],
+    post_id: postId,
   },
 }).catch((error) => {
   console.log(error);
-  return result(responseHandler(false, 500, 'Something went wrong!', null), null);
+  throw new Error('Something went wrong!');
 });
 
 exports.countForAll = async (tagName = '') => {
