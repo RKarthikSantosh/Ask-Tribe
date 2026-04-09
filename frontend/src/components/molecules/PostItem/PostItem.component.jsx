@@ -35,14 +35,14 @@ const PostItem = ({post}) => {
   const answerVoteUp = (
     <div className="vote answer">
       <span className="vote-count">{answer_count}</span>
-      <div className="count-text">answers</div>
+      <div className="count-text">{answer_count === 1 ? 'answer' : 'answers'}</div>
     </div>
   );
 
   const answerVoteDown = (
     <div className="vote">
       <span className="vote-count">{answer_count}</span>
-      <div className="count-text">answers</div>
+      <div className="count-text">{answer_count === 1 ? 'answer' : 'answers'}</div>
     </div>
   );
 
@@ -52,12 +52,12 @@ const PostItem = ({post}) => {
         <div className="stats">
           <div className="vote">
             <span className="vote-count">{comment_count}</span>
-            <div className="count-text">comments</div>
+            <div className="count-text">{comment_count === 1 ? 'comment' : 'comments'}</div>
           </div>
           {answer_count > 0 ? answerVoteUp : answerVoteDown}
           <div className="vote">
             <span className="vote-count">{tags.length}</span>
-            <div className="count-text">tags</div>
+            <div className="count-text">{tags.length === 1 ? 'tag' : 'tags'}</div>
           </div>
           <div className="vote">
             <div className="count-text">{views} views</div>

@@ -76,7 +76,7 @@ TagPage.propTypes = {
   getTag: PropTypes.func.isRequired,
   getTagPosts: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
-  tag: PropTypes.func.isRequired,
+  tag: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
