@@ -11,7 +11,7 @@ const CommunitiesModel = db.define('communities', {
   name: {
     type: DataTypes.STRING(120),
     allowNull: false,
-    unique: true,
+    unique: 'name',
   },
   description: {
     type: DataTypes.TEXT,

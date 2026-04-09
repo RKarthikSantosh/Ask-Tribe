@@ -9,5 +9,8 @@ router.use('/tags', require('./tags.router'));
 router.use('/communities', require('./communities.router'));
 router.use('/posts/answers', require('./answers.router'));
 router.use('/posts/comments', require('./comments.router'));
+router.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok' });
+});
 
 module.exports = router;
